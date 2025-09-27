@@ -5,7 +5,7 @@ export async function addTodo(task: string, todoModel: TodoModel): Promise<void>
   try {
     const todo = createTodo(task);
     await todoModel.add(todo);
-    console.log(`Added todo: "${task}" [${todo.id}]`);
+    console.log(`Added todo: "${task}"`);
   } catch (error) {
     console.error('Error adding todo:', error);
   }

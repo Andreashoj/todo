@@ -1,7 +1,7 @@
 import { TodoModel } from '../models/TodoModel';
 import { displayTodos } from '../utils/helpers';
 
-export async function removeTodo(position: string, todoModel: TodoModel): Promise<void> {
+export async function focusTodo(position: string, todoModel: TodoModel): Promise<void> {
   try {
     const todos = await todoModel.list();
     
@@ -10,26 +10,30 @@ export async function removeTodo(position: string, todoModel: TodoModel): Promis
       return;
     }
     
-    const index = parseInt(position) - 1; // Convert to 0-based index
-    
-    if (isNaN(index) || index < 0 || index >= todos.length) {
+    const pos = parseInt(position);
+    if (isNaN(pos) || pos < 1 || pos > todos.length) {
       console.log(`Invalid position: ${position}. Use a number between 1 and ${todos.length}`);
       return;
     }
     
-    const todo = todos[index];
-    const success = await todoModel.remove(todo.id);
+    const todo = todos[pos - 1];
+    if (todo.completed) {
+      console.log(`Cannot focus on completed todo: "${todo.task}"`);
+      return;
+    }
+    
+    const success = await todoModel.focusOnTodo(pos);
     
     if (success) {
-      console.log(`Removed todo ${position}: "${todo.task}"\n`);
-      // Show updated list with current todo
+      console.log(`Focused on todo ${pos}: "${todo.task}"\n`);
+      // Show updated list with new focus
       const updatedTodos = await todoModel.list();
       const currentTodo = await todoModel.getCurrentTodo();
       displayTodos(updatedTodos, currentTodo?.id);
     } else {
-      console.log(`Todo "${todo.task}" not found`);
+      console.log(`Failed to focus on todo ${pos}`);
     }
   } catch (error) {
-    console.error('Error removing todo:', error);
+    console.error('Error focusing todo:', error);
   }
 }

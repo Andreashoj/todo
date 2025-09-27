@@ -24,7 +24,7 @@ export function createTodo(task: string): Todo {
   };
 }
 
-export function displayTodos(todos: Todo[]): void {
+export function displayTodos(todos: Todo[], currentTodoId?: string): void {
   if (todos.length === 0) {
     console.log('No todos found!');
     return;
@@ -38,7 +38,10 @@ export function displayTodos(todos: Todo[]): void {
       ? ` (completed: ${formatDate(todo.completedAt)})` 
       : '';
     
-    console.log(`${index + 1}. [${todo.id}] ${status} ${todo.task}${completedText}`);
+    // Add dart emoji to the current/focused todo
+    const currentIndicator = (todo.id === currentTodoId && !todo.completed) ? ' 🎯' : '';
+    
+    console.log(`${index + 1}. ${status} ${todo.task}${completedText}${currentIndicator}`);
   });
   
   console.log(`\nTotal: ${todos.length} todos (${todos.filter(t => !t.completed).length} pending, ${todos.filter(t => t.completed).length} completed)\n`);
