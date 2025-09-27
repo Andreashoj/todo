@@ -3,13 +3,33 @@ import { join } from 'path';
 import { homedir } from 'os';
 import { Todo, TodoStore, TodoData, TodoList } from '../types';
 import { generateId } from '../utils/helpers';
+import { SetupManager } from '../utils/setup';
 
 export class TodoModel implements TodoStore {
   public data: TodoData = { currentList: null, archivedLists: [] };
   private filePath: string;
+  private setupManager: SetupManager;
 
   constructor() {
+    this.setupManager = new SetupManager();
+    // Default fallback path - will be updated in ensureSetup
     this.filePath = join(homedir(), '.todo-cli.json');
+  }
+
+  private async ensureSetup(): Promise<void> {
+    const isSetupComplete = await this.setupManager.isSetupComplete();
+    
+    if (!isSetupComplete) {
+      // Run first-time setup
+      const dataPath = await this.setupManager.runFirstTimeSetup();
+      this.filePath = join(dataPath, 'todos.json');
+    } else {
+      // Use configured data path
+      const dataPath = await this.setupManager.getDataPath();
+      if (dataPath) {
+        this.filePath = join(dataPath, 'todos.json');
+      }
+    }
   }
 
   private createNewList(): TodoList {
@@ -51,6 +71,8 @@ export class TodoModel implements TodoStore {
   }
 
   async load(): Promise<TodoData> {
+    await this.ensureSetup();
+    
     try {
       const fileData = await fs.readFile(this.filePath, 'utf-8');
       const parsed = JSON.parse(fileData);

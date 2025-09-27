@@ -162,19 +162,73 @@ todo archive-show 1.1
 
 ### All Available Commands
 ```bash
-todo add <task>           # Add a new todo
-todo list / ls            # List all todos
-todo complete / done      # Complete focused todo
-todo complete <position>  # Complete specific todo
-todo focus <position>     # Focus on specific todo
-todo remove / rm <pos>    # Remove todo by position
-todo archive              # Archive current list
-todo archives             # List archived lists
-todo archive-show <ref>   # Show archived list (e.g., "1.2")
-todo clear-archives       # Clear all archives
-todo --help              # Show help
+todo add <task>              # Add a new todo
+todo list / ls               # List all todos
+todo complete / done         # Complete focused todo
+todo complete <position>     # Complete specific todo
+todo undone / uncomplete     # Mark completed todo as incomplete
+todo focus <position>        # Focus on specific todo
+todo remove / rm <pos>       # Remove todo by position
+todo archive                 # Archive current list
+todo archives                # List archived lists
+todo archive-show <ref>      # Show archived list (e.g., "1.2")
+todo clear-archives          # Clear all archives
+todo data-location           # Show current data location
+todo data-location change    # Change data storage location
+todo --help                  # Show help
 ```
 
-## Data Storage
+## 🔒 Privacy & Data Storage
 
-Todos are stored in `~/.todo-cli.json` in your home directory with a structured format supporting current lists and archives.
+### Respectful Data Handling
+Todo CLI respects your privacy and asks permission before storing any data on your system.
+
+**First Run Setup:**
+On your first use, Todo CLI will ask where you'd like to store your data:
+
+```
+🎯 Welcome to Todo CLI!
+
+For your privacy and security, we need to ask where you'd like to store your todo data.
+This is a one-time setup that you can change later with `todo data-location`.
+
+Available options:
+1. Platform standard (recommended): ~/Library/Application Support/todo-cli  (macOS)
+2. Home directory: ~/.todo-cli
+3. Custom path (you specify)
+4. Current directory (portable, but data tied to this folder)
+
+Choose an option (1-4):
+```
+
+### Platform-Specific Defaults
+- **macOS**: `~/Library/Application Support/todo-cli/`
+- **Linux**: `~/.local/share/todo-cli/`
+- **Windows**: `%APPDATA%/todo-cli/`
+- **Custom**: Any path you specify
+
+### Managing Data Location
+```bash
+# Check current data location
+todo data-location
+
+# Change data location (with migration option)
+todo data-location change
+```
+
+### What Gets Stored
+- Your todo items and completion status
+- Archive history of completed todo lists
+- Focus preferences and timestamps
+- **No tracking, analytics, or personal information**
+
+### Data Migration
+When changing data location, Todo CLI offers to migrate your existing data safely to the new location.
+
+### Uninstalling
+To completely remove Todo CLI and its data:
+```bash
+npm uninstall -g anho-todo
+rm -rf [your-data-location]  # Remove data directory
+rm ~/.todo-cli-config.json   # Remove config file
+```

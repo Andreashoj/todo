@@ -8,6 +8,7 @@ import { undoneTodo } from './commands/undone';
 import { removeTodo } from './commands/remove';
 import { archiveList, listArchives, showArchive, clearArchives } from './commands/archive';
 import { focusTodo } from './commands/focus';
+import { showDataLocation, changeDataLocation } from './commands/data-location';
 import { TodoModel } from './models/TodoModel';
 
 import packageJson from '../package.json';
@@ -72,5 +73,16 @@ program
   .command('clear-archives')
   .description('Clear all archived lists')
   .action(() => clearArchives(todoModel));
+
+program
+  .command('data-location [action]')
+  .description('Show current data location or change it (actions: show, change)')
+  .action((action) => {
+    if (action === 'change') {
+      changeDataLocation();
+    } else {
+      showDataLocation();
+    }
+  });
 
 program.parse();
