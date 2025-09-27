@@ -33,7 +33,7 @@ export function displayTodos(todos: Todo[], currentTodoId?: string): void {
   console.log('\nYour Todos:\n');
   
   todos.forEach((todo, index) => {
-    const status = todo.completed ? '[DONE]' : '[TODO]';
+    const checkbox = todo.completed ? '[X]' : '[ ]';
     const completedText = todo.completed && todo.completedAt 
       ? ` (completed: ${formatDate(todo.completedAt)})` 
       : '';
@@ -41,7 +41,7 @@ export function displayTodos(todos: Todo[], currentTodoId?: string): void {
     // Add dart emoji to the current/focused todo
     const currentIndicator = (todo.id === currentTodoId && !todo.completed) ? ' 🎯' : '';
     
-    console.log(`${index + 1}. ${status} ${todo.task}${completedText}${currentIndicator}`);
+    console.log(`${index + 1}. ${checkbox} ${todo.task}${completedText}${currentIndicator}`);
   });
   
   console.log(`\nTotal: ${todos.length} todos (${todos.filter(t => !t.completed).length} pending, ${todos.filter(t => t.completed).length} completed)\n`);

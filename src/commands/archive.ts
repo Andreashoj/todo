@@ -111,12 +111,12 @@ export async function showArchive(archiveRef: string, todoModel: TodoModel): Pro
     }
     
     archive.todos.forEach((todo, index) => {
-      const status = todo.completed ? '[DONE]' : '[TODO]';
+      const checkbox = todo.completed ? '[X]' : '[ ]';
       const completedText = todo.completed && todo.completedAt 
         ? ` (completed: ${formatDate(todo.completedAt)})` 
         : '';
       
-      console.log(`${index + 1}. ${status} ${todo.task}${completedText}`);
+      console.log(`${index + 1}. ${checkbox} ${todo.task}${completedText}`);
     });
     
     const totalTodos = archive.todos.length;
