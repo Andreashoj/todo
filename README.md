@@ -1,4 +1,4 @@
-# Todoer
+# Todo CLI
 
 A simple command-line todo application built with Node.js and TypeScript.
 
@@ -6,21 +6,21 @@ A simple command-line todo application built with Node.js and TypeScript.
 
 ### Global Installation (Recommended)
 ```bash
-npm install -g todoer
+npm install -g anho-todo
 ```
 
 Then use it anywhere:
 ```bash
-todoer add "Buy groceries"
-todoer list
-todoer complete <id>
-todoer remove <id>
+todo add "Buy groceries"
+todo list
+todo complete <id>
+todo remove <id>
 ```
 
 ### Local Development
 ```bash
-git clone https://github.com/yourusername/todoer.git
-cd todoer
+git clone https://github.com/Andreashoj/todo.git
+cd todo
 npm install
 npm run build
 ```
