@@ -142,6 +142,27 @@ export class TodoModel implements TodoStore {
     return false;
   }
 
+  async uncomplete(id: string): Promise<boolean> {
+    await this.load();
+    if (!this.data.currentList) return false;
+    
+    const todo = this.data.currentList.todos.find(t => t.id === id);
+    
+    if (todo && todo.completed) {
+      todo.completed = false;
+      todo.completedAt = undefined;
+      
+      // If no current todo is set, make this the current one
+      if (!this.data.currentList.currentTodoId) {
+        this.data.currentList.currentTodoId = todo.id;
+      }
+      
+      await this.save();
+      return true;
+    }
+    return false;
+  }
+
   async list(): Promise<Todo[]> {
     await this.load();
     return this.data.currentList?.todos || [];

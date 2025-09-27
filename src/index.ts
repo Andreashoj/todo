@@ -4,6 +4,7 @@ import { program } from 'commander';
 import { addTodo } from './commands/add';
 import { listTodos } from './commands/list';
 import { completeTodo } from './commands/complete';
+import { undoneTodo } from './commands/undone';
 import { removeTodo } from './commands/remove';
 import { archiveList, listArchives, showArchive, clearArchives } from './commands/archive';
 import { focusTodo } from './commands/focus';
@@ -34,6 +35,12 @@ program
   .alias('done')
   .description('Mark a todo item as complete (defaults to first pending todo)')
   .action((position) => completeTodo(position, todoModel));
+
+program
+  .command('undone [position]')
+  .alias('uncomplete')
+  .description('Mark a completed todo item as incomplete (defaults to first completed todo)')
+  .action((position) => undoneTodo(position, todoModel));
 
 program
   .command('remove <position>')
