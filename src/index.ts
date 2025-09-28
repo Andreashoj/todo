@@ -47,10 +47,19 @@ program
   });
 
 program
-  .command('undone [position]')
+  .command('undone [positions...]')
   .alias('uncomplete')
-  .description('Mark a completed todo item as incomplete (defaults to first completed todo)')
-  .action((position) => undoneTodo(position, todoModel));
+  .description('Mark completed todo items as incomplete (defaults to first completed todo, or specify multiple positions)')
+  .action((positions) => {
+    // If positions is undefined (no arguments), pass empty array
+    // If positions is a string (single argument), convert to array
+    // If positions is already an array, use it as-is
+    let positionsArray: string[] = [];
+    if (positions) {
+      positionsArray = Array.isArray(positions) ? positions : [positions];
+    }
+    undoneTodo(positionsArray, todoModel);
+  });
 
 program
   .command('remove <positions...>')

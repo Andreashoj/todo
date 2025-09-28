@@ -23,6 +23,11 @@ todo complete            # Complete the focused todo
 todo complete 1          # Complete specific todo by position
 todo complete 1 3 5      # Complete multiple todos at once
 
+# Undo single or multiple completed todos
+todo undone              # Undo the first completed todo
+todo undone 1            # Undo specific completed todo by position
+todo undone 1 2 3        # Undo multiple completed todos at once
+
 # Remove single or multiple todos
 todo remove 2            # Remove todo by position
 todo remove 1 3 4        # Remove multiple todos at once
@@ -104,9 +109,10 @@ dist/                   # Compiled JavaScript output
 ### 🎯 Core Functionality
 - **Add todos** - `todo add "Your task"` or multiple `todo add "Task 1" "Task 2" "Task 3"`
 - **Smart completion** - `todo complete` (completes focused todo) or multiple `todo complete 1 3 5`
+- **Smart undo** - `todo undone` (undoes first completed) or multiple `todo undone 1 2 3`
 - **Position-based operations** - No more cryptic IDs!
 - **Focus system** - `todo focus 3` to control which todo is current
-- **Bulk operations** - Add, complete, or remove multiple todos at once
+- **Bulk operations** - Add, complete, undo, or remove multiple todos at once
 - **Clean removal** - `todo remove 2` or multiple `todo remove 1 3 4`
 
 ### 📅 Daily Workflow
@@ -155,6 +161,12 @@ todo complete 2 4
 #   2. "Walk the dog"
 #   4. "Call mom"
 
+# Undo multiple completed todos
+todo undone 2 4
+# Undone 2 todos:
+#   2. "Walk the dog"
+#   4. "Call mom"
+
 # Focus on a specific todo
 todo focus 3
 todo complete  # Now completes "Finish project"
@@ -198,7 +210,9 @@ todo complete <position>     # Complete specific todo
 todo complete <pos1> <pos2>  # Complete multiple todos at once
 
 # Managing todos
-todo undone / uncomplete     # Mark completed todo as incomplete
+todo undone / uncomplete     # Mark first completed todo as incomplete
+todo undone <position>       # Mark specific completed todo as incomplete
+todo undone <pos1> <pos2>    # Mark multiple completed todos as incomplete
 todo focus <position>        # Focus on specific todo
 todo remove / rm <pos>       # Remove todo by position
 todo remove / rm <pos1> <pos2>  # Remove multiple todos at once

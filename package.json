@@ -1,6 +1,6 @@
 {
   "name": "anho-todo",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple CLI todo application built with Node.js and TypeScript",
   "main": "dist/index.js",
   "bin": {
