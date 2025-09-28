@@ -21,9 +21,9 @@ program
   .version(packageJson.version);
 
 program
-  .command('add <task>')
-  .description('Add a new todo item')
-  .action((task) => addTodo(task, todoModel));
+  .command('add <task...>')
+  .description('Add one or more todo items')
+  .action((tasks) => addTodo(tasks, todoModel));
 
 program
   .command('list')
@@ -32,10 +32,19 @@ program
   .action(() => listTodos(todoModel));
 
 program
-  .command('complete [position]')
+  .command('complete [positions...]')
   .alias('done')
-  .description('Mark a todo item as complete (defaults to first pending todo)')
-  .action((position) => completeTodo(position, todoModel));
+  .description('Mark todo items as complete (defaults to first pending todo, or specify multiple positions)')
+  .action((positions) => {
+    // If positions is undefined (no arguments), pass empty array
+    // If positions is a string (single argument), convert to array
+    // If positions is already an array, use it as-is
+    let positionsArray: string[] = [];
+    if (positions) {
+      positionsArray = Array.isArray(positions) ? positions : [positions];
+    }
+    completeTodo(positionsArray, todoModel);
+  });
 
 program
   .command('undone [position]')
@@ -44,10 +53,10 @@ program
   .action((position) => undoneTodo(position, todoModel));
 
 program
-  .command('remove <position>')
+  .command('remove <positions...>')
   .alias('rm')
-  .description('Remove a todo item by position number')
-  .action((position) => removeTodo(position, todoModel));
+  .description('Remove todo items by position numbers')
+  .action((positions) => removeTodo(positions, todoModel));
 
 program
   .command('focus <position>')

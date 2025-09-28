@@ -11,13 +11,24 @@ npm install -g anho-todo
 
 Then use it anywhere:
 ```bash
+# Add single or multiple todos
 todo add "Buy groceries"
-todo add "Walk the dog"
+todo add "Walk the dog" "Finish project" "Call mom"
+
+# List todos with focus indicator
 todo list                # See your todos with 🎯 on current one
+
+# Complete single or multiple todos
 todo complete            # Complete the focused todo
-todo focus 2             # Focus on todo #2
 todo complete 1          # Complete specific todo by position
+todo complete 1 3 5      # Complete multiple todos at once
+
+# Remove single or multiple todos
 todo remove 2            # Remove todo by position
+todo remove 1 3 4        # Remove multiple todos at once
+
+# Focus on specific todo
+todo focus 2             # Focus on todo #2
 ```
 
 ### Local Development
@@ -91,11 +102,12 @@ dist/                   # Compiled JavaScript output
 ## Features
 
 ### 🎯 Core Functionality
-- **Add todos** - `todo add "Your task"`
-- **Smart completion** - `todo complete` (completes focused todo)
+- **Add todos** - `todo add "Your task"` or multiple `todo add "Task 1" "Task 2" "Task 3"`
+- **Smart completion** - `todo complete` (completes focused todo) or multiple `todo complete 1 3 5`
 - **Position-based operations** - No more cryptic IDs!
 - **Focus system** - `todo focus 3` to control which todo is current
-- **Clean removal** - `todo remove 2`
+- **Bulk operations** - Add, complete, or remove multiple todos at once
+- **Clean removal** - `todo remove 2` or multiple `todo remove 1 3 4`
 
 ### 📅 Daily Workflow
 - **Archive system** - `todo archive` to start fresh
@@ -107,6 +119,8 @@ dist/                   # Compiled JavaScript output
 - **Visual focus indicator** - 🎯 shows current todo
 - **Position-based numbering** - Work with 1, 2, 3 instead of IDs
 - **Smart defaults** - `todo complete` knows what you want
+- **Bulk operations** - Efficient multi-parameter support for productivity
+- **Intelligent error handling** - Clear feedback on failed operations
 - **Aliases** - `ls`, `done`, `rm` for common commands
 - **Clean output** - No clutter, just what you need
 
@@ -120,27 +134,36 @@ dist/                   # Compiled JavaScript output
 
 ### Basic Workflow
 ```bash
-# Add some todos
+# Add some todos (single or multiple)
 todo add "Buy groceries"
-todo add "Walk the dog" 
-todo add "Finish project"
+todo add "Walk the dog" "Finish project" "Call mom"
 
 # Check your list (🎯 shows current todo)
 todo list
-# 1. [TODO] Buy groceries 🎯
-# 2. [TODO] Walk the dog
-# 3. [TODO] Finish project
+# 1. [ ] Buy groceries 🎯
+# 2. [ ] Walk the dog
+# 3. [ ] Finish project
+# 4. [ ] Call mom
 
 # Complete the current todo
 todo complete
 # Completed todo 1: "Buy groceries"
 
+# Complete multiple todos at once
+todo complete 2 4
+# Completed 2 todos:
+#   2. "Walk the dog"
+#   4. "Call mom"
+
 # Focus on a specific todo
 todo focus 3
 todo complete  # Now completes "Finish project"
 
-# Remove a todo by position
-todo remove 2
+# Remove multiple todos by position
+todo remove 1 2
+# Removed 2 todos:
+#   1. "Buy groceries"
+#   2. "Walk the dog"
 ```
 
 ### Daily Workflow
@@ -162,17 +185,31 @@ todo archive-show 1.1
 
 ### All Available Commands
 ```bash
-todo add <task>              # Add a new todo
+# Adding todos
+todo add <task>              # Add a single todo
+todo add <task1> <task2>...  # Add multiple todos at once
+
+# Viewing todos
 todo list / ls               # List all todos
+
+# Completing todos
 todo complete / done         # Complete focused todo
 todo complete <position>     # Complete specific todo
+todo complete <pos1> <pos2>  # Complete multiple todos at once
+
+# Managing todos
 todo undone / uncomplete     # Mark completed todo as incomplete
 todo focus <position>        # Focus on specific todo
 todo remove / rm <pos>       # Remove todo by position
+todo remove / rm <pos1> <pos2>  # Remove multiple todos at once
+
+# Archiving
 todo archive                 # Archive current list
 todo archives                # List archived lists
 todo archive-show <ref>      # Show archived list (e.g., "1.2")
 todo clear-archives          # Clear all archives
+
+# Configuration
 todo data-location           # Show current data location
 todo data-location change    # Change data storage location
 todo --help                  # Show help
